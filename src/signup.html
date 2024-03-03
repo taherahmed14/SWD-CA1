@@ -1,0 +1,78 @@
+<!--register.html-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>User Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div>
+      <h2>User Register</h2>
+      <form onsubmit="handleRegister(event)">
+        <div>
+            <label>First name</label>
+            <input type="text" placeholder="First name" name="firstName">
+        </div>
+        <div>
+            <label>Last name</label>
+            <input type="text" placeholder="Last name" name="lastName">
+        </div>
+        <div>
+            <label>Mobile number</label>
+            <input type="number" placeholder="Mobile" name="mobile">
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="text" placeholder="Email" name="email">
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" placeholder="Password" name="password">
+        </div>
+        <div>
+            <label>Confirm password</label>
+            <input type="password" placeholder="Confirm password" name="confirmPassword">
+        </div>
+        <div class="d-grid mt-3">
+            <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
+
+<script>
+
+    const handleRegister = async (event) => {
+        event.preventDefault();
+
+        let firstName = document.getElementById("firstName").value;
+        let lastName = document.getElementById("lastName").value;
+        let mobile = document.getElementById("mobile").value;
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+
+        await fetch('/user-register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                firstName, 
+                lastName,
+                mobile,
+                email,
+                password
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Register successful!");
+            window.location.href = 'login.html';
+        })
+        .catch(error => {
+            alert("User registration failed");
+        });
+    }
+</script>
